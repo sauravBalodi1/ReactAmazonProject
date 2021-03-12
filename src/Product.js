@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import "./Product.css"
+import { useStateValue } from './StateProvider';
 function Product(props) {
+ const [{basket}, dispatch]= useStateValue();
+  
+    const addToBasket=()=>{
+        //dispatch item in the data layer
+       dispatch({
+            type:"ADD_TO_BASKET",
+            item:{
+                id:props.id,
+                title:props.title,
+                image:props.image,
+                price:props.price,
+                rating:props.rating,
+            },
+           });
+
+      
+    };
+
     return (
         <div className="product"> 
             <div className="product_info">
@@ -21,7 +40,7 @@ function Product(props) {
                 </div>
             </div>
             <img src={props.image} className="product_image"/><br/>
-         <button >Add to basket</button>
+         <button onClick={addToBasket}>Add to basket</button>
         </div>
         
     )
