@@ -1,9 +1,20 @@
 export const inititalState={
     basket:[],
 };
+export const getBasketTotal=(basket)=>{
+    //console.log(basket)
+    let total=0;
+ 
+ for(let i=0;i<basket.length;i++)
+ {
+     total=basket[i].price+total;
+    
+ }
+ return total;
+ 
+}
 const reducer=(state,action)=>{
-    console.log(action)
-    switch(action.type)
+      switch(action.type)
     {
         case "ADD_TO_BASKET":
             return{
