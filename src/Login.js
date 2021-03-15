@@ -1,18 +1,32 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useHistory } from 'react-router-dom'
+import { db,auth } from './firebase';
 import "./Login.css"
 function Login() {
+    const history=useHistory();
+
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const signIn=e=>{
            e.preventDefault();
            //implementing firebase
+           auth.signInWithEmailAndPassword(email,password).then
+           (auth=>{
+               history.push("/");
+           }).catch(error=>(error.message))
 
     }
     const register=e=>{
-        e.preventDefault()
+        e.preventDefault();
+        auth.createUserWithEmailAndPassword(email,password)
+        .then((auth)=>{
+           if(auth)
+           {
+               history.push('/');
+           }
+        }).catch(error=>alert(error.message));
     }
-    
+
     return (
         <div className="login">
             <Link to="/">
@@ -35,7 +49,7 @@ function Login() {
                  By signing-in you agree the terms and condition of amazon
                  of use & sale .Please see our privacy Notice ,our cookies Notice and Interest-Based Ads Notice.
              </p>
-             <button onclick={register}className="login_registerButton">Create your Amazon Account</button>
+             <button onClick={register}className="login_registerButton">Create your Amazon Account</button>
          </div>
         </div>
     )
