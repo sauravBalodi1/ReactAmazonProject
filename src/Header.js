@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import './Header.css'
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
@@ -28,7 +28,7 @@ function Header() {
             <div className="header__nav">
             <Link to={!user && '/login'}>
                 <div onClick={handleAuthentication} className="header__option">
-                   <span className="header__optionLineOne">Hello guest </span>
+                   <span className="header__optionLineOne">Hello {!user?"guest":user.email} </span>
                    <a href="facebook.com"className="header__optionLineTwo">{user?'Sign Out':'Sign In'} </a>
                 </div>
             </Link>
