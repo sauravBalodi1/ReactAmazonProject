@@ -22,6 +22,6 @@
     flex: .2;
 
 }
-.pmnt_address,.pmnt_items{
+.pmnt_address,.pmnt_items,.pmnt_details{
     flex: .8;
 }
