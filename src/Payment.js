@@ -7,7 +7,7 @@ import "./Payment.css";
 import { useStateValue } from './StateProvider';
 import { getBasketTotal } from './reducer';
 import CurrencyFormat from "react-currency-format";
-import axios from 'axios';
+import axios from './axios';
 function Payment() {
  const [{basket,user},dispatch]=useStateValue();
    const stripe=useStripe();
@@ -16,7 +16,7 @@ function Payment() {
    const [disabled, setdisabled] = useState(true)
    const [succeeded, setsucceeded] = useState(false);
    const [processing, setprocessing] = useState("");
-   const [clientsecret, setclientsecret] = useState(true);
+   const [clientSecret, setClientSecret] = useState(true);
    const history=useHistory();
    useEffect(() => {
      //generate special stripe secret which allows us to charge a customer
@@ -26,17 +26,18 @@ function Payment() {
              //stripe expects the total in a currencies subunits
              url:`/payments/create?total=${getBasketTotal(basket)*100}`
          });
-         setclientsecret(response.data.clientsecret);
+         setClientSecret(response.data.clientSecret);
 
      }
      getclientsecret();
    }, [basket])
+   console.log("secret is : ",clientSecret)
    const handlesubmit=async (e)=>{
        //stripe functionallity
        e.preventDefault();
        setprocessing(true);
 
-    const payload =await stripe.confirmCardPayment(clientsecret,{
+    const payload =await stripe.confirmCardPayment(clientSecret,{
        payment_method:{
            card:elements.getElement(CardElement)
        }
